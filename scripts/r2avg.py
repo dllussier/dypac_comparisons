@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 from numpy import mean
 from numpy import var
 from math import sqrt
+from rpy2.robjects.packages import importr
+from rpy2.robjects.vectors import FloatVector
 
 sns.set_theme(style="ticks", color_codes=True)
 
@@ -37,6 +39,11 @@ def cohend(d1, d2):
 d = cohend(data1, data2)
 print('Cohens d: %.3f' % d)
 
+#fdr correction
+pvalue_list=()
+
+stats = importr('stats')
+p_adjust = stats.p_adjust(FloatVector(pvalue_list), method = 'BH')
 
 # plotting
 sns.catplot(x="ATLAS_FWHM", y="AVG_MASKED", kind="boxen",
