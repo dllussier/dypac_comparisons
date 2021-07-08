@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 from numpy import mean
 from numpy import var
 from math import sqrt
+from statsmodels.formula.api import ols
+import statsmodels.api as sm
 from rpy2.robjects.packages import importr
 from rpy2.robjects.vectors import FloatVector
 
@@ -18,7 +20,7 @@ dataset = pd.read_csv(input_file, header=0,  sep=',')
 
 print(dataset)
 
-# statistical analyses
+## statistical analyses
 data1 = dataset[dataset['ATLAS_FWHM'] == 'dypac_8mm']['AVG_MASKED']
 data2 = dataset[dataset['ATLAS_FWHM'] == 'dypac_5mm']['AVG_MASKED']
 
@@ -38,6 +40,16 @@ def cohend(d1, d2):
  
 d = cohend(data1, data2)
 print('Cohens d: %.3f' % d)
+
+# regression model
+model = ols('AVG_MASKED ~ C(ATLAS) + C(FWHM)', dataset).fit()
+print(model.summary())
+
+print(model.f_test([0, 1, -1, 0])) 
+
+table = sm.stats.anova_lm(model, typ=2) # Type 2 ANOVA DataFrame
+
+print(table)
 
 #fdr correction
 pvalue_list=()
