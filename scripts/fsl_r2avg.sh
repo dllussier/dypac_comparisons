@@ -8,7 +8,7 @@ module load fsl/6.0.3
 for resolution in 64c_512s_5mm 64c_512s_8mm 128c_512s_5mm 128c_512s_8mm 128c_1024s_5mm 128c_1024s_8mm 256c_1024s_5mm 256c_1024s_8mm
 do
 
-	for mask in dypac schaefer yeo mist shen smith difumo_256 difumo_512 difumo_1024
+	for mask in dypac schaefer yeo mist shen gordon smith difumo_256 difumo_512 difumo_1024
 	do
 
 		i="0"
